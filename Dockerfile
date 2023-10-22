@@ -6,5 +6,5 @@ COPY . /genie
 WORKDIR /genie/cmd/api
 RUN go build -o /bin/genie -ldflags '-w -s' -tags netgo -a -installsuffix cgo -v .
 
-EXPOSE 8081
+EXPOSE 8080
 CMD ["/bin/genie"]

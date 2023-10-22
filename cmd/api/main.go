@@ -1,19 +1,18 @@
 package main
 
 import (
-	"fmt"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"github.com/statuzproj/genie/utils/healthz"
 	"log"
 	"net/http"
 )
 
 func main() {
-	fmt.Println("genie is out of the jar")
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		_, err := fmt.Fprint(w, "Genie says Hello World!")
-		if err != nil {
-			return
-		}
-		log.Println("responded with hello world")
-	})
-	http.ListenAndServe(":8081", nil)
+
+	http.HandleFunc("/healthz", healthz.HealthCheck)
+	http.Handle("/metrics", promhttp.Handler())
+	err := http.ListenAndServe(":8080", nil)
+	if err != nil {
+		log.Fatalf("HTTP server error: %v", err)
+	}
 }

@@ -31,7 +31,7 @@ deployments:
           - image: genie
         service:
           ports:
-            - port: 8081
+            - port: 8080
   prometheus:
     helm:
       chart:
@@ -41,6 +41,11 @@ deployments:
         serverFiles:
           prometheus.yml:
             scrape_configs:
+              - job_name: prometheus
+                static_configs:
+                  - targets:
+                    - localhost:9090
+
               - job_name: statuz
                 honor_timestamps: true
                 scrape_interval: 15s
@@ -49,7 +54,7 @@ deployments:
                 scheme: http
                 static_configs:
                   - targets:
-                      - watcher:8080
+                    - genie:8080
   grafana:
     helm:
       chart:
@@ -85,9 +90,9 @@ dev:
       - gitCredentials: true
     ports:
       - port: "2345"
-      - port: "8081"
+      - port: "8080"
     open:
-      - url: http://localhost:8081
+      - url: http://localhost:8080
 
 commands:
   migrate-db:
