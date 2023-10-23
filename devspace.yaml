@@ -39,14 +39,12 @@ deployments:
         repo: https://prometheus-community.github.io/helm-charts
       values:
         serverFiles:
+          rule_files:
+              - /etc/config/recording_rules.yml
+              - /etc/config/alerting_rules.yml
           prometheus.yml:
             scrape_configs:
               - job_name: prometheus
-                static_configs:
-                  - targets:
-                    - localhost:9090
-
-              - job_name: statuz
                 honor_timestamps: true
                 scrape_interval: 15s
                 scrape_timeout: 10s
@@ -54,7 +52,25 @@ deployments:
                 scheme: http
                 static_configs:
                   - targets:
-                    - genie:8080
+                      - localhost:9090
+              - job_name: genie
+                honor_timestamps: true
+                scrape_interval: 15s
+                scrape_timeout: 10s
+                metrics_path: /metrics
+                scheme: http
+                static_configs:
+                  - targets:
+                      - genie:8080
+              - job_name: watcher
+                honor_timestamps: true
+                scrape_interval: 15s
+                scrape_timeout: 10s
+                metrics_path: /metrics
+                scheme: http
+                static_configs:
+                  - targets:
+                      - watcher:8081
   grafana:
     helm:
       chart:
