@@ -29,12 +29,23 @@ deployments:
       values:
         containers:
           - image: genie
+            env:
+              - name: ENDPOINTS
+                valueFrom:
+                  configMapKeyRef:
+                    "name": "watchpoints"
+                    "key": "endpoints"
+              - name: GLOBAL_CONFIG
+                valueFrom:
+                  configMapKeyRef:
+                    "name": "watchpoints"
+                    "key": "global"
         service:
           ports:
             - port: 8080
 dev:
   genie:
-    imageSelector: genie
+    imageSelector: genie:${runtime.images.genie.tag}
     devImage: ghcr.io/loft-sh/devspace-containers/go:1.20-alpine
     sync:
       - path: ./
