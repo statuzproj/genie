@@ -45,7 +45,7 @@ deployments:
             - port: 8080
 dev:
   genie:
-    imageSelector: genie
+    imageSelector: genie:${runtime.images.genie.tag}
     devImage: ghcr.io/loft-sh/devspace-containers/go:1.20-alpine
     sync:
       - path: ./
