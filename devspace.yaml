@@ -29,6 +29,17 @@ deployments:
       values:
         containers:
           - image: genie
+            env:
+              - name: ENDPOINTS
+                valueFrom:
+                  configMapKeyRef:
+                    "name": "watchpoints"
+                    "key": "endpoints"
+              - name: GLOBAL_CONFIG
+                valueFrom:
+                  configMapKeyRef:
+                    "name": "watchpoints"
+                    "key": "global"
         service:
           ports:
             - port: 8080
