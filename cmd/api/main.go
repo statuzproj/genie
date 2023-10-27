@@ -8,7 +8,6 @@ import (
 )
 
 func main() {
-	log.Println("genie is out of the jar")
 
 	http.HandleFunc("/healthz", healthz.HealthCheck)
 	http.Handle("/metrics", promhttp.Handler())

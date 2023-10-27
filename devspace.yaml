@@ -29,17 +29,21 @@ deployments:
       values:
         containers:
           - image: genie
-            env:
-              - name: ENDPOINTS
-                valueFrom:
-                  configMapKeyRef:
-                    "name": "watchpoints"
-                    "key": "endpoints"
-              - name: GLOBAL_CONFIG
-                valueFrom:
-                  configMapKeyRef:
-                    "name": "watchpoints"
-                    "key": "global"
+            volumeMounts:
+              - containerPath: /etc/config
+                volume:
+                  name: watchpoints-vol
+                  readonly: false
+#            env:
+#              - name: GLOBAL_CONFIG
+#                valueFrom:
+#                  configMapKeyRef:
+#                    "name": "watchpoints"
+#                    "key": "global"
+        volumes:
+          - name: watchpoints-vol
+            configMap:
+              name: watchpoints
         service:
           ports:
             - port: 8080
@@ -63,6 +67,9 @@ dev:
       - port: "8080"
     open:
       - url: http://localhost:8080
+
+
+
 
 #commands:
 #  migrate-db:
