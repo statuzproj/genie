@@ -6,10 +6,15 @@ import (
 	"os"
 )
 
+type Target struct {
+	Type     string `yaml:"type"`
+	Endpoint string `yaml:"endpoint"`
+	Method   string `yaml:"method"`
+}
+
 type Endpoint struct {
 	Name   string `yaml:"name"`
-	Type   string `yaml:"type"`
-	Target string `yaml:"target"`
+	Target Target `yaml:"target"`
 }
 
 var cfgPath = "/etc/config/"
