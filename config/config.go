@@ -19,13 +19,13 @@ func LoadEndpoints() (ednpoints []Endpoint, err error) {
 	var cfgFile = cfgPath + "endpoints.yaml"
 	var endpoints []Endpoint
 
-	contant, err := os.ReadFile(cfgFile)
+	content, err := os.ReadFile(cfgFile)
 	if err != nil {
 		log.Println(err)
 		return endpoints, err
 	}
 
-	err = yaml.Unmarshal(contant, &endpoints)
+	err = yaml.Unmarshal(content, &endpoints)
 	if err != nil {
 		log.Println(err)
 		return endpoints, err
