@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"github.com/statuzproj/genie/config"
 	"github.com/statuzproj/genie/utils/healthz"
 	"log"
 	"net/http"
@@ -9,6 +10,7 @@ import (
 
 func main() {
 
+	http.HandleFunc("/endpoints", config.HandleEndpoints)
 	http.HandleFunc("/healthz", healthz.HealthCheck)
 	http.Handle("/metrics", promhttp.Handler())
 	err := http.ListenAndServe(":8080", nil)
