@@ -9,6 +9,7 @@ import (
 type Target struct {
 	Type     string `yaml:"type"`
 	Endpoint string `yaml:"endpoint"`
+	Interval string `yaml:"interval"`
 	Method   string `yaml:"method"`
 }
 
